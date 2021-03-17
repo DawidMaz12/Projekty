@@ -1,0 +1,611 @@
+CREATE TABLE Departamenty
+(
+    id_departamentu int,
+    nazwa varchar(30),
+    id_kierownika int,
+    miejscowosc varchar(30)
+);
+
+CREATE TABLE Dostawcy
+(
+    id_dostawcy int,
+    nazwa_dostawcy varchar(40),
+    typ_produktu varchar(10)
+);
+
+CREATE TABLE faktura_sprzedazy
+(
+    id_faktury int,
+    data_faktury datetime2,
+    id_klienta int,
+    wartosc_netto decimal(8,2),
+    wartosc_brutto decimal(8,2),
+    waluta varchar(5)
+);
+
+
+create table klienci
+(
+    id_klienta int,
+    imie varchar(30),
+    nazwisko varchar(30),
+    miasto varchar(30),
+    ulica varchar(30),
+    email varchar(30),
+    telefon varchar(18)
+);
+
+create table stanowiska
+(
+    id_stanowiska varchar(6),
+    tytul varchar(40),
+    min_wynagrodzenie decimal(8,2),
+    max_wynagrodzenie decimal(10,2)
+);
+
+create table zamowienie
+(
+    id_zakupu int,
+    pozycja int,
+    id_produktu bigint,
+    ilosc int,
+    data_zamowienia datetime2
+);
+
+create table pracownicy
+(
+    id_pracownika bigint,
+    imie varchar(30),
+    drugie_imie varchar(30),
+    nazwisko varchar(30),
+    pesel varchar(11),
+    data_zatrudnienia datetime2,
+    stanowisko varchar(6),
+    pensja decimal(10,2),
+    id_kierownika int,
+    id_departamentu int
+);
+
+create table dostawa
+(
+    id_dostawy int,
+    id_produktu bigint,
+    id_dostawcy int,
+    ilosc int,
+    typ_produktu varchar(10),
+    data_dostawy datetime2
+);
+
+
+create table zakupy
+(
+    id_zakupu int,
+    id_klienta int,
+    typ_zaplaty varchar(10),
+    czy_faktura varchar(1),
+    id_faktury varchar(6)
+);
+
+create table realizacja
+(
+    id_zakupu int,
+    status varchar(15),
+    dostawca varchar(10)
+);
+
+create table produkty
+(
+    id_produktu bigint,
+    nazwa varchar(30),
+    typ_produktu varchar(10),
+    cena_zakupu decimal(7,2),
+    cena_sprzedazy decimal(8,2),
+    opis varchar(100)
+);
+
+create table reklamacja
+(
+    id_reklamacji int,
+    id_zakupu int,
+    opis varchar(100),
+    werdykt varchar(20)
+);
+
+create table typy_produktow
+(
+    typ_produktu varchar(10),
+    nazwa varchar(20)
+);
+
+create table waluta
+(
+    waluta varchar(5),
+    nazwa varchar(30)
+);
+
+create table dostawca_klienta
+(
+    id_dostawcy int,
+    nazwa_dostawcy varchar(10)
+);
+
+
+create table absencje
+(
+    id_absencji int,
+    id_pracownika bigint,
+    nazwisko varchar(30),
+    powod varchar(20),
+    od datetime2,
+    do datetime2
+);
+
+
+
+create sequence num_prac
+minvalue 100
+maxvalue 999
+start with 100
+increment by 1;
+
+drop sequence num_prac;
+
+create sequence num_prod
+minvalue 1
+maxvalue 999
+start with 1
+increment by 1;
+
+
+-- INSERTY PRACOWNICY  ------------------------------------------------------------------------------------------------
+
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Jan', 'Dawid', 'Kowalski', '69022312345', '2006-07-25', 'Prez', 60000, null, 100);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Kazimierz', 'Alfred', 'Wolski', '75051212345', '2006-09-14', 'VPrez', 40000, 100, 100);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Justyna', 'Klara', 'Makowska', '78111412345', '2006-11-30', 'KDSprz', 40000, 101, 100);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Kamil', null, 'Merk', '80051412345', '2006-12-22', 'KDIT', 40000, 101, 100);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Jurek', null, 'Walc', '66022112345', '2007-01-30', 'KDKsie', 40000, 101, 100);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Jacek', 'Marek', 'Lubek', '78031412345', '2006-11-30', 'KSprz', 10000, 102, 110);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Marta', 'Wanda', 'Rak', '75101812345', '2006-03-10', 'Sprz', 5000, 105, 110);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Monika', null , 'Gamma', '80121912345', '2006-08-10', 'Sprz', 4500, 105, 110);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Grzegorz', 'Franciszek', 'Felder', '60091912345', '2006-10-10', 'Sprz', 5500, 105, 110);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Kamil', null , 'Roczek', '60042312345', '2006-08-02', 'KIT', 15000, 103, 120);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Mieszko', 'Boleslaw' , 'Horek', '80072112345', '2008-08-08', 'IT', 9000, 109, 120);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Magda', 'Maria' , 'Kluska', '85072112345', '2009-06-09', 'IT', 8000, 109, 120);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Marek', null , 'Kamien', '79042112345', '2007-10-08', 'IT', 8500, 109, 120);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Monika', 'Barbara' , 'Kryc', '86072112345', '2008-08-08', 'KKsie', 8000, 104, 130);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Max', 'Bolek' , 'Pole', '76071212345', '2008-10-05', 'Ksie', 5000, 113, 130);
+insert into pracownicy (id_pracownika, imie ,drugie_imie, nazwisko, pesel, data_zatrudnienia, stanowisko, pensja, id_kierownika, id_departamentu)
+values (next value for num_prac, 'Natalia', null , 'Wrak', '73041212345', '2009-11-05', 'Ksie', 5000, 113, 130);
+
+
+-- INSERTY DEPARTAMENTY  ------------------------------------------------------------------------------------------------
+
+insert into departamenty (id_departamentu, nazwa, id_kierownika, miejscowosc)
+values (100, 'Zarzad', 100, 'Warszawa');
+insert into departamenty (id_departamentu, nazwa, id_kierownika, miejscowosc)
+values (110, 'Sprzedaz', 102, 'Krakow');
+insert into departamenty (id_departamentu, nazwa, id_kierownika, miejscowosc)
+values (120, 'IT', 103, 'Wroclaw');
+insert into departamenty (id_departamentu, nazwa, id_kierownika, miejscowosc)
+values (130, 'Ksiegowosc', 104, 'Warszawa');
+
+
+-- INSERTY PRODUKTY  ------------------------------------------------------------------------------------------------
+
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'MSI GTX 970', 'GPU', 500, 700, 'Karta graficzna MSI GeForce GTX 970 GAMING 4GB DDR5 (256 bit) DP, HDMI, 2x DVI (GTX 970 GAMING 4G)');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'MSI GTX 1650', 'GPU', 1400, 2000, 'Karta graficzna MSI GeForce GTX 1650 D6 Ventus XS OC 4GB GDDR6 (GTX 1650 D6 VENTUS XS OC)');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'Gigabyte Radeon RX 5700 XT', 'GPU', 4500, 6900, 'Karta graficzna Gigabyte Radeon RX 5700 XT Gaming OC V2 8GB GDDR6 (GV-R57XTGAMING OC-8GD 2.0)');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'HyberX Fury RGB', 'RAM', 150, 399, 'Pamiec HyperX Fury RGB, DDR4, 16 GB, 3200MHz, CL16 (HX432C16FB3AK2/16)');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'Corsair Vengeance RGB PRO', 'RAM', 200, 499, 'Pamiec Corsair Vengeance RGB PRO, DDR4, 16 GB, 3200MHz, CL16 (CMW16GX4M2C3200C16)');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'AMD Ryzen 5 3600', 'CPU', 500, 859, 'Procesor AMD Ryzen 5 3600, 3.6GHz, 32 MB, BOX (100-100000031BOX)');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'Intel Core i7-10700K', 'CPU', 800, 1519, 'Procesor Intel Core i7-10700K, 3.8GHz, 16 MB, BOX (BX8070110700K)');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'Gigabyte B450 AORUS ELITE', 'PGlowna', 150, 369, 'Plyta glowna Gigabyte B450 AORUS ELITE');
+insert into produkty (id_produktu, nazwa, typ_produktu, cena_zakupu, cena_sprzedazy, opis)
+values (next value for num_prod, 'Asus TUF GAMING B550 PLUS', 'PGlowna', 250, 639, 'Plyta glowna Asus TUF GAMING B550 PLUS');
+
+
+-- INSERTY TYP PRODUKTU  ------------------------------------------------------------------------------------------------
+
+insert into typy_produktow (typ_produktu, nazwa)
+values ('GPU', 'Karta Graficzna');
+insert into typy_produktow (typ_produktu, nazwa)
+values ('CPU', 'Procesor');
+insert into typy_produktow (typ_produktu, nazwa)
+values ('RAM', 'Pamiec RAM');
+insert into typy_produktow (typ_produktu, nazwa)
+values ('PGlowna', 'Plyta Glowna');
+
+
+-- INSERTY DOSTAWCY  ------------------------------------------------------------------------------------------------
+
+insert into dostawcy (id_dostawcy, nazwa_dostawcy, typ_produktu)
+values (1, 'MSI', 'GPU');
+insert into dostawcy (id_dostawcy, nazwa_dostawcy, typ_produktu)
+values (2, 'Gigabyte', 'GPU');
+insert into dostawcy (id_dostawcy, nazwa_dostawcy, typ_produktu)
+values (3, 'HyperX', 'RAM');
+insert into dostawcy (id_dostawcy, nazwa_dostawcy, typ_produktu)
+values (4, 'Corsair', 'RAM');
+insert into dostawcy (id_dostawcy, nazwa_dostawcy, typ_produktu)
+values (5, 'Ryzen', 'CPU');
+insert into dostawcy (id_dostawcy, nazwa_dostawcy, typ_produktu)
+values (6, 'Intel', 'CPU');
+insert into dostawcy (id_dostawcy, nazwa_dostawcy, typ_produktu)
+values (2, 'Gigabyte', 'PGlowna');
+
+
+-- INSERTY DOSTAWA  ------------------------------------------------------------------------------------------------
+
+insert into dostawa (id_dostawy, id_produktu, id_dostawcy, ilosc, typ_produktu, data_dostawy)
+values (1, 1, 1, 10, 'GPU', '2015-10-12');
+insert into dostawa (id_dostawy, id_produktu, id_dostawcy, ilosc, typ_produktu, data_dostawy)
+values (2, 4, 3, 20, 'RAM', '2015-12-16');
+
+
+-- INSERTY KLIENCI  ------------------------------------------------------------------------------------------------
+
+insert into klienci (id_klienta, imie, nazwisko, miasto, ulica, email, telefon)
+values (1, 'Marek', 'Lalka', 'Warka', 'Szkolna', 'Marek123@email.com', '+48 616-500-248');
+insert into klienci (id_klienta, imie, nazwisko, miasto, ulica, email, telefon)
+values (2, 'Marta', 'Frak', 'Warszawa', 'Dluga', 'Marta123@email2.com', '+48 645-600-842');
+insert into klienci (id_klienta, imie, nazwisko, miasto, ulica, email, telefon)
+values (3, 'Mirek', 'Por', 'Warszawa', 'Miejska', 'Mirek.Por@email.com', '+48 695-515-600');
+insert into klienci (id_klienta, imie, nazwisko, miasto, ulica, email, telefon)
+values (4, 'Magda', 'Warta', 'Plock', 'Szkolna', 'Magdawarta@email2.com', '+48 875-315-250');
+insert into klienci (id_klienta, imie, nazwisko, miasto, ulica, email, telefon)
+values (5, 'Pawel', 'Laik', 'Krakow', 'Wolna', 'Pawel321@email.com', '+48 500-601-873');
+
+
+-- INSERTY WALUTY  ------------------------------------------------------------------------------------------------
+
+insert into waluta (waluta, nazwa)
+values ('PLN', 'Nowy zloty polski');
+insert into waluta (waluta, nazwa)
+values ('USD', 'Dolar amerykanski');
+insert into waluta (waluta, nazwa)
+values ('EUR', 'Euro');
+insert into waluta (waluta, nazwa)
+values ('GBP', 'Funt brytyjski');
+
+
+-- INSERTY ZAKUPY  ------------------------------------------------------------------------------------------------
+
+insert into zakupy (id_zakupu, id_klienta, typ_zaplaty, czy_faktura, id_faktury)
+values (1,2,'Gotowka', 1, 100000);
+insert into zakupy (id_zakupu, id_klienta, typ_zaplaty, czy_faktura, id_faktury)
+values (2,4,'Karta', 1, 100001);
+insert into zakupy (id_zakupu, id_klienta, typ_zaplaty, czy_faktura, id_faktury)
+values (3,1,'Gotowka', null, null);
+
+
+-- INSERTY faktury_sprzedazy  ------------------------------------------------------------------------------------------------
+
+insert into faktura_sprzedazy (id_faktury, data_faktury, id_klienta, wartosc_netto, wartosc_brutto, waluta)
+values (100000, '2019-10-20', 2, 6844.72 , 8419, 'PLN');
+insert into faktura_sprzedazy (id_faktury, data_faktury, id_klienta, wartosc_netto, wartosc_brutto, waluta)
+values (100001, '2020-10-10', 4, 2031.71 , 2499, 'PLN');
+
+
+-- INSERTY zamowienie  ------------------------------------------------------------------------------------------------
+
+insert into zamowienie (id_zakupu, pozycja, id_produktu, ilosc, data_zamowienia)
+values (1,1, 3, 1, '2019-10-20');
+insert into zamowienie (id_zakupu, pozycja, id_produktu, ilosc, data_zamowienia)
+values (1,2, 7, 1, '2019-10-20');
+insert into zamowienie (id_zakupu, pozycja, id_produktu, ilosc, data_zamowienia)
+values (2,1, 2, 1, '2019-10-20');
+insert into zamowienie (id_zakupu, pozycja, id_produktu, ilosc, data_zamowienia)
+values (2,2, 5, 1, '2020-10-10');
+insert into zamowienie (id_zakupu, pozycja, id_produktu, ilosc, data_zamowienia)
+values (3,1, 1, 1, '2020-11-10');
+
+
+-- INSERTY realizacja  ------------------------------------------------------------------------------------------------
+
+insert into realizacja (id_zakupu, status, dostawca)
+values (1, 'Wyslane', 'DHL');
+insert into realizacja (id_zakupu, status, dostawca)
+values (2, 'Realizacja', null);
+insert into realizacja (id_zakupu, status, dostawca)
+values (3, 'Zrealizowane', 'UPS');
+
+
+-- INSERTY reklamacja  ------------------------------------------------------------------------------------------------
+
+insert into reklamacja (id_reklamacji, id_zakupu, opis, werdykt)
+values (1, 3, 'Karta graficzna nie wyswietala obrazu', 'Wymiana produktu');
+
+
+-- INSERTY STANOWISKA  ------------------------------------------------------------------------------------------------
+
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('Prez', 'Prezes', 60000, 60000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('VPrez', 'Vice Prezes', 40000, 50000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('KDSprz', 'Kierownik departamentu sprzedazy', 40000, 40000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('KDIT', 'Kierownik departamentu IT', 40000, 40000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('KDKsie', 'Kierownik departamentu Ksiegowosci', 40000, 40000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('KSprz', 'Kierownik Sprzedazy', 10000, 12000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('KIT', 'Kierownik IT', 15000, 16000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('KKsie', 'Kierownik Ksiegowosci', 8000, 10000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('Sprz', 'Sprzedawca', 4000, 6000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('IT', 'IT', 8000, 9000);
+insert into stanowiska (id_stanowiska, tytul, min_wynagrodzenie, max_wynagrodzenie)
+values ('Ksie', 'Ksiegowy', 4000, 6000);
+
+-- inserty dostawca_klienta -----------------------------------------------------------------------------
+
+insert into dostawca_klienta
+values (1, 'DHL');
+insert into dostawca_klienta
+values (2,'UPS');
+
+
+-- inserty absencje -----------------------------------------------------------------------------
+
+insert into absencje (id_absencji, id_pracownika, nazwisko, powod, od, do)
+values (1, 103, 'Merk', 'Choroba', '2014/06/28', '2014/07/14');
+insert into absencje (id_absencji, id_pracownika, nazwisko, powod, od, do)
+values (2, 112, 'Kamien', 'Urlop', '2014/07/20', '2014/08/7');
+insert into absencje (id_absencji, id_pracownika, nazwisko, powod, od, do)
+values (3, 110, 'Horek', 'L4', sysdatetime(), null);
+
+
+
+-- constraint dostawcy --------------------------------------------------------------------------------------------
+alter table dostawcy
+alter column id_dostawcy int not null;
+alter table dostawcy
+alter column typ_produktu varchar(10) not null;
+alter table dostawcy
+add constraint PK_id_dostawcy primary key(id_dostawcy,typ_produktu);
+alter table dostawcy
+alter column nazwa_dostawcy varchar(20) not null;
+alter table dostawcy
+add constraint fk_typ_prod_dost foreign key (typ_produktu) references typy_produktow(typ_produktu);
+
+
+
+-- constraint departamenty --------------------------------------------------------------------------------------------
+alter table departamenty
+alter column id_departamentu int not null;
+alter table departamenty
+add constraint PK_id_departamentu primary key(id_departamentu);
+alter table departamenty
+alter column nazwa varchar(30) not null;
+
+-- constraint KLIENCI --------------------------------------------------------------------------------------------
+alter table klienci
+alter column id_klienta int not null;
+alter table klienci
+add constraint pk_id_klienta primary key (id_klienta);
+alter table klienci
+alter column imie varchar(30) not null; 
+alter table klienci 
+alter column nazwisko varchar(30) not null;
+
+-- constraint WALUTA --------------------------------------------------------------------------------------------
+alter table waluta
+alter column waluta varchar(5) not null;
+alter table waluta
+add constraint pk_waluta primary key (waluta);
+alter table waluta
+alter column nazwa varchar(20) not null;
+
+-- constraint faktura_sprzedazy --------------------------------------------------------------------------------------------
+alter table faktura_sprzedazy
+alter column id_faktury int not null;
+
+alter table faktura_sprzedazy
+add constraint pk_id_faktury primary key (id_faktury);
+alter table faktura_sprzedazy
+add constraint fk_id_klienta foreign key (id_klienta) references  klienci(id_klienta);
+alter table faktura_sprzedazy
+add constraint fk_waluta foreign key (waluta) references  waluta(waluta);
+alter table faktura_sprzedazy
+alter column data_faktury datetime2 not null;
+alter table faktura_sprzedazy
+alter column wartosc_netto decimal(8,2) not null;
+alter table faktura_sprzedazy
+alter column wartosc_brutto decimal(8,2) not null;
+
+-- constraint zakupy --------------------------------------------------------------------------------------------
+alter table zakupy
+alter column id_zakupu int not null;
+alter table zakupy
+add constraint pk_id_zakupu primary key (id_zakupu);
+alter table zakupy
+add constraint fk_id_klienta_zakupy foreign key (id_klienta) references klienci(id_klienta);
+alter table zakupy
+alter column typ_zaplaty varchar(10) not null;
+
+-- constraint typy_produktow --------------------------------------------------------------------------------------------
+alter table typy_produktow
+alter column typ_produktu varchar(10) not null;
+alter table typy_produktow
+add constraint pk_typ_produktu primary key (typ_produktu);
+alter table typy_produktow
+alter column nazwa varchar(30) not null;
+
+-- constraint produkty --------------------------------------------------------------------------------------------
+alter table produkty
+alter column id_produktu bigint not null;
+alter table produkty
+add constraint pk_id_produktu primary key (id_produktu);
+alter table produkty
+add constraint fk_typ_produktu foreign key (typ_produktu) references typy_produktow(typ_produktu);
+alter table produkty
+alter column nazwa varchar(30) not null;
+
+
+
+-- constraint stanowiska --------------------------------------------------------------------------------------------
+alter table stanowiska
+alter column id_stanowiska varchar(6) not null;
+alter table stanowiska
+add constraint pk_id_stanowiska primary key (id_stanowiska);
+alter table stanowiska
+alter column tytul varchar(40) not null;
+
+-- constraint pracownicy --------------------------------------------------------------------------------------------
+alter table pracownicy
+alter column id_pracownika bigint not null;
+alter table pracownicy
+add constraint pk_id_pracownika primary key (id_pracownika);
+alter table pracownicy
+add constraint fk_id_departamentu foreign key (id_departamentu) references departamenty(id_departamentu);
+alter table pracownicy
+add constraint fk_id_stanowiska foreign key (stanowisko) references stanowiska(id_stanowiska);
+alter table pracownicy
+alter column imie varchar(30) not null;
+alter table pracownicy
+alter column nazwisko varchar(30) not null;
+alter table pracownicy
+alter column pesel varchar(11) not null;
+alter table pracownicy
+add constraint ck_pesel check (len(pesel) = 11);
+
+-- constraint zamowienie --------------------------------------------------------------------------------------------
+alter table zamowienie
+alter column id_zakupu int not null;
+alter table zamowienie
+alter column pozycja int not null;
+alter table zamowienie
+add constraint pk_zakup_pozycja primary key (id_zakupu, pozycja);
+alter table zamowienie
+add constraint fk_zakup_zamow foreign key (id_zakupu) references zakupy(id_zakupu);
+alter table zamowienie
+add constraint fk_id_produkt_zamow foreign key (id_produktu) references produkty(id_produktu);
+
+
+-- constraint reklamacje --------------------------------------------------------------------------------------------
+alter table reklamacja
+alter column id_reklamacji int not null;
+alter table reklamacja
+add constraint pk_id_reklamacji primary key (id_reklamacji);
+alter table reklamacja
+add constraint fk_zakup_reklamacja foreign key (id_zakupu) references zakupy(id_zakupu);
+
+
+-- constraint dostawca klienta --------------------------------------------------------------------------------------------
+alter table dostawca_klienta
+alter column id_dostawcy int not null;
+alter table dostawca_klienta
+add constraint pk_dostawca_klienta primary key (id_dostawcy);
+alter table dostawca_klienta
+add constraint uq_nazwa_dostawcy unique (nazwa_dostawcy);
+
+
+-- constraint realizacja --------------------------------------------------------------------------------------------
+alter table realizacja
+alter column id_zakupu int not null;
+alter table realizacja
+add constraint fk_realizacja_zakup foreign key (id_zakupu) references zakupy(id_zakupu);
+alter table realizacja
+add constraint fk_dostawca_realizacja foreign key (dostawca) references dostawca_klienta(nazwa_dostawcy);
+alter table realizacja
+alter column status varchar(15) not null;
+
+
+-- constraint dostawa --------------------------------------------------------------------------------------------
+alter table dostawa
+alter column id_dostawy int not null;
+alter table dostawa
+alter column id_produktu bigint not null;
+alter table dostawa
+add constraint pk_id_dostawy primary key (id_dostawy, id_produktu);
+alter table dostawa
+add constraint fk_id_prod_dostawa foreign key (id_produktu) references produkty(id_produktu);
+alter table dostawa
+add constraint fk_dostawca_typ foreign key (id_dostawcy, typ_produktu) references dostawcy(id_dostawcy, typ_produktu);
+alter table dostawa
+add constraint fk_typ_dostaw_prod foreign key (typ_produktu) references typy_produktow(typ_produktu);
+
+
+-- constraint absencje --------------------------------------------------------------------------------------------
+alter table absencje
+alter column id_absencji int not null;
+alter table absencje
+alter column id_pracownika bigint;
+alter table absencje
+add constraint pk_id_absencji primary key (id_absencji);
+alter table absencje
+add constraint fk_id_prac_abs foreign key (id_pracownika) references pracownicy(id_pracownika);
+alter table absencje
+alter column nazwisko varchar(30) not null;
+alter table absencje
+alter column od datetime2 not null;
+
+-- widoki -------------------------------------------------------------------------------------------------------------
+go
+
+create view pracownicy_widok as
+select id_pracownika "id", imie, isnull(drugie_imie, '----') "drugie imie", nazwisko, pesel, stanowisko, prac.id_kierownika "id kierownika", prac.id_departamentu "numer departamentu", nazwa "departament"
+from pracownicy prac join departamenty dep on (dep.id_departamentu = prac.id_departamentu);
+
+go
+
+create view widok_departamenty as
+select  dep.id_departamentu, nazwa, miejscowosc, dep.id_kierownika, imie, nazwisko
+from departamenty dep join pracownicy prac on (dep.id_kierownika = prac.id_pracownika);
+
+go
+
+create view widok_prac_dep_detale as
+select id_pracownika, nazwisko, (select round(avg(pensja),2) from pracownicy where id_departamentu = prac.id_departamentu) "srednie zarobki",
+pensja-(select round(avg(pensja),2) from pracownicy where id_departamentu = prac.id_departamentu) as "r�nica wynagrodzenia w departamencie",
+(select count(*) from pracownicy where id_departamentu = prac.id_departamentu group by id_departamentu) "ilosc pracownikow", id_departamentu
+from pracownicy prac ;
+
+go
+
+create view widok_pensja_detale as
+select id_pracownika, nazwisko, tytul,pensja, pensja - min_wynagrodzenie "do minimalnego wynagrodzenia", max_wynagrodzenie - pensja "do maxymalnego wynagrodzenia"
+from pracownicy prac join stanowiska stan on (stanowisko = id_stanowiska); 
+
+go
+
+create view widok_zamowienie_detale as
+select id_zakupu, zam.id_produktu, nazwa, ilosc,  sum(cena_sprzedazy) over (partition by id_zakupu order by pozycja) "Suma ceny"
+from zamowienie zam join produkty prod on (prod.id_produktu = zam.id_produktu);
+
+go
+
+create view widok_naj_klienci as
+select distinct(klienci.id_klienta) id, klienci.imie, klienci.nazwisko, sum(cena_sprzedazy) over (partition by zamowienie.id_zakupu) "wydatek"
+from klienci join zakupy on (zakupy.id_klienta = klienci.id_klienta)
+join zamowienie on (zamowienie.id_zakupu = zakupy.id_zakupu)
+join produkty on (produkty.id_produktu = zamowienie.id_produktu);
+
+
