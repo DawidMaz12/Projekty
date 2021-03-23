@@ -1,2 +1,6 @@
-# Sklep_komputerowy
-Baza danych sklepu komputerowego rozwijana jest na bieżąco wraz ze zdobywaniem nowej wiedzy oraz z nowymi pomysłami
+**PROJEKT BIBLIOTEKI**
+Do stworzenia bazy danych biblioteki zastosowano podstawowe mechanizmy języka zapytań Oracle SQL
+
+Za pomocą PL/SQL stworzono:
+- procedury
+- wyzwalacze
